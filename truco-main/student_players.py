@@ -22,11 +22,19 @@ from judge import card_value
         minha equipe ou nao ja vai ser mais facil
         - faço uma variavel de "contador" para ir voltando a qtd de casas mecessarias - nao precisou
         
+        acho q ate funciona mas vou ter q dar um jeito de acompanhar quem esta jogando primeiro
         
-        acho q o problema ta em quando alguem ganha o proximo é o jogador a esquerda dele, logo a position ta indo
-        até o round anterior
+        a proxima mao comeca com quem ganha a anterior
         
-        acho q ate funciona mas vou ter q dar um jeito de acompanhar quem esta jogando primeiro'''
+        score_hist tem uma listona com listas que tem uma lista com os pontos gerais e
+        o segundo indice é o valor da mao
+        
+        acho que avaliar pelo indice 0 da playhist nao vai me adiantar mta coisa
+        
+        algo com len(play_hist[-1])%4)
+        
+        eu vejo o len, se for 0 é pq sou o primeiro a jogar, se for diferente disso
+        minha posicao de jogada é o resto da divisao'''
 
 
 # Jogador que não faz nada. Substitua esta classe para criar as suas, devem herdar da classe Player
@@ -40,17 +48,18 @@ class FirstPlayer(Player):
         sorted_cards = self.sort_cards(top_card) #lista ordenada
         team = (self.position, (self.position+2)%4)
         print(team)
+        print('manilha ', top_card)
 
         if len(play_hist[0])>0:
-            for round in play_hist: #cada round de 4 cartas
-                print("historico ", play_hist)
-                print()
-                if self.position!=0:
+            for round in play_hist: #cada round, no total vou ter 12 listas dentro de round
+                my_round_position = len(round)%4 #aqui, teoricamente, me retorna minha posicao na rodada atual
+                if my_round_position!=0:
                     best_value = card_value(round[-1][1], top_card)
                     best_card = round[-1][1]
                     best_card_position = round[-1][0]
 
-                    for card in range(0, round[0] == 0, -1):
+                    #em teoria vê as cartas anteriores à minha vez de jogar e guarda qual é a maior e de quem é
+                    for card in range(my_round_position-1, 0, -1):
                         current_card = round[card][1]
                         if card_value(current_card, top_card) > best_value:
                             best_value = card_value(current_card, top_card)
