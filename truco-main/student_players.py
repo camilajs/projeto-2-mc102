@@ -1,8 +1,3 @@
-### TODO: PREENCHA SUAS INFORMAÇÕES AQUI ###
-# Nome #01 (quem entregou o código):    Camila Jesus Santana
-# RA #01 (quem entregou o código):      323249
-# Nome #02:                             Guilherme Oliveira Costa
-# RA #02:                               270203
 from basic_players import Player
 from judge import card_value
 
